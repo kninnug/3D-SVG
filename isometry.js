@@ -88,7 +88,31 @@
 			return field;
 		},
 		
+		fromPolygonPoints: function(polygon){
+			var points = polygon.split(" ");
+			var topLeft = points[0].split(",");
+			var topRight = points[1].split(",");
+			var bottomRight = points[2].split(",");
+			var bottomLeft = points[3].split(",");
+			return {"topLeft":topLeft,"topRight":topRight,"bottomRight":bottomRight,"bottomLeft":bottomLeft};
+		}
+		
+		toPolygonPoints: function(points){
+			return points.topLeft.join(",")+" "+points.topRight.join(",")+" "+
+				   points.bottomRight.join(",")+" "+points.bottomLeft.join(",");
+		}
+		
 		changeHeight: function(elm, h){
-			
+			var x = parseInt(elm.getAttribute("data-x"));
+			var y = parseInt(elm.getAttribute("data-y"));
+			if(x > 0){
+				var elmLeft = document.getElementById("box-"+(x-1)+"-"+y);
+				// from the left element we change the top-right corner
+				var points = ThreeDee.fromPolygonPoints(elm.getAttribute("points"));
+				points.topRight[0] -= ThreeDee.heightMap[x-1][y]*ThreeDee.field.height;
+			}
+			if(y > 0){
+				var elmTopLeft = document.getElementById("box-"+x
+			}
 		},
 	};
